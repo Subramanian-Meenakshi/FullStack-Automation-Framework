@@ -1,0 +1,20 @@
+{
+  "action": "employee-update",
+  "employeeId": "PW2bbsmh2",
+  "correlationId": "pw-mw2bbsn9-a7sy",
+  "timestamp": "2026-11-04T16:10:03.340871967Z",
+  "employee": {
+    "employeeId": "PW2bbsmh2",
+    "firstName": "PostUpdate",
+    "lastName": "Wright",
+    "email": "PW2bbsmh2@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Sr Analyst",
+    "department": "Platform",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}
