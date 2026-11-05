@@ -1,9 +1,9 @@
-# Full Stack Automation Framework for Modern Cloud Native , Event Driven Microservices & Distributed System Platform
+# Full Stack QE Automation Framework for Modern Cloud Native, Event Driven Microservices & Distributed System Platform
 
 [![CI](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/ci.yml/badge.svg)](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/ci.yml)
 [![CD](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/cd.yml/badge.svg)](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/cd.yml)
 
-Production-style Automation demo: React portal + Spring Boot microservices + JWT/RBAC + PostgreSQL + Redis + Kafka + LocalStack S3, with Playwright/Allure test automation and GitHub CI/CD.
+Production-style Quality Engineering Automation: React portal + Spring Boot microservices + JWT/RBAC + PostgreSQL + Redis + Kafka + Local Stack S3, with Playwright/Allure test automation and GitHub CI/CD.
 
 ---
 
@@ -70,7 +70,8 @@ Event flow (writes): employee-service publishes async (failure logged WARN, CRUD
 ## 3. Repository layout
 
 ```
-FullStack-Automation-Framework├── backend
+FullStack-Automation-Framework
+├── backend
 │   ├── pom.xml                 # aggregator: shared-library → 3 services
 │   ├── shared-library          # CorrelationIdFilter/Holder, AuditLog/AuditService
 │   ├── auth-service            # :8080
