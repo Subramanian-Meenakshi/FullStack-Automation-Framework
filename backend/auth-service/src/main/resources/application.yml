@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:employee_db}
+    username: ${DB_USER:employee_user}
+    password: ${DB_PASSWORD:employee_password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+app:
+  name: Sandhata Employee Portal
+  jwt:
+    secret: ${JWT_SECRET:U2VjdXJlSldUU2VjcmV0S2V5RW1wbG95ZWVQbGF0Zm9ybTIwMjZBZXNzZW50aWFsU2VjcmV0}
+    access-token-expiry-minutes: ${ACCESS_TOKEN_EXPIRY_MINUTES:15}
+    refresh-token-expiry-days: ${REFRESH_TOKEN_EXPIRY_DAYS:7}
+
+logging:
+  pattern:
+    correlation: "[${spring.application.name:app},%X{correlationId:-N/A}] "
+  level:
+    org.springframework.security: INFO

@@ -1,0 +1,216 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-backend:
+    name: Backend build (Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Maven install (skip tests)
+        working-directory: backend
+        run: mvn -B -q -DskipTests install
+
+      - name: Upload jars
+        uses: actions/upload-artifact@v7
+        with:
+          name: backend-jars
+          path: backend/*/target/*.jar
+          retention-days: 3
+
+  build-frontend:
+    name: Frontend build (Vite)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/employee-portal
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/employee-portal/package-lock.json
+
+      - name: npm ci
+        run: npm ci
+
+      - name: vite build
+        run: npm run build
+
+      - name: Upload dist
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-dist
+          path: frontend/employee-portal/dist
+          retention-days: 3
+
+  smoke:
+    name: Infra, smoke + Playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Start infrastructure
+        run: docker compose -f infrastructure/docker-compose.yml up -d
+
+      - name: Wait for datastores (postgres, kafka, localstack)
+        run: |
+          FAIL=0
+          for i in $(seq 1 60); do
+            P=$(docker exec postgres pg_isready -U employee_user -d employee_db 2>/dev/null || true)
+            S=$(docker exec localstack curl -s http://localhost:4566/_localstack/health 2>/dev/null | grep -c '"s3": "running"' || true)
+            K=$(docker exec kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1 && echo 1 || echo 0)
+            if echo "$P" | grep -q 'accepting connections' && [ "$S" = "1" ] && [ "$K" = "1" ]; then
+              echo "datastores ready after ${i}x2s"
+              break
+            fi
+            sleep 2
+          done
+          echo "postgres=[$P] s3=[$S] kafka=[$K]"
+
+      - name: Build and start services (3 jars)
+        run: bash scripts/restart.sh
+
+      - name: Infra health
+        run: bash scripts/infra.sh
+
+      - name: Smoke matrix
+        run: bash scripts/smoke.sh
+
+      - name: Setup Node (frontend + playwright)
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            frontend/employee-portal/package-lock.json
+            playwright/package-lock.json
+
+      - name: Install Playwright + chromium
+        working-directory: playwright
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Seed baseline employees (UI tests need rows)
+        run: |
+          TOKEN=$(curl -s -m5 -X POST http://localhost:8080/api/auth/login \
+            -H 'Content-Type: application/json' \
+            -d '{"username":"hradmin","password":"hradmin123"}' \
+            | grep -o '"accessToken":"[^"]*' | cut -d'"' -f4)
+          if [ -z "$TOKEN" ]; then echo "FAIL token"; exit 1; fi
+          OK=0
+          for i in $(seq -w 1 10); do
+            C=$(curl -s -m5 -o /dev/null -w '%{http_code}' -X POST http://localhost:8082/employees \
+              -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+              -d "{\"employeeId\":\"BASE$i\",\"firstName\":\"Base\",\"lastName\":\"Row$i\",\"email\":\"base$i@corp.com\",\"contactNumber\":\"98765430$i\"}")
+            echo "BASE$i=$C"
+            [ "$C" = "201" ] && OK=$((OK+1))
+          done
+          echo "seeded=$OK/10"
+          [ "$OK" -ge 9 ]
+
+      - name: Start frontend (Vite)
+        run: |
+          cd frontend/employee-portal
+          npm ci
+          nohup npm run dev > /tmp/vite.log 2>&1 &
+          for i in $(seq 1 30); do
+            C=$(curl -s -m2 -o /dev/null -w '%{http_code}' http://localhost:5173/ || true)
+            [ "$C" = "200" ] && echo "vite ready after ${i}x2s" && break
+            sleep 2
+          done
+          [ "$C" = "200" ] || { echo "FAIL vite got=$C"; tail -50 /tmp/vite.log; exit 1; }
+
+      - name: Playwright smoke (8 tests)
+        working-directory: playwright
+        run: npm run test:smoke
+
+      - name: Playwright full matrix (131 tests)
+        working-directory: playwright
+        run: npm run test:all
+
+      - name: Stage CI logs into workspace
+        if: always()
+        run: |
+          mkdir -p ci-logs
+          cp -f /tmp/vite.log /tmp/auth-service.log /tmp/employee-service.log /tmp/employee-consumer.log ci-logs/ 2>/dev/null || true
+          ls -la ci-logs/
+
+      - name: Allure report
+        if: always()
+        working-directory: playwright
+        run: npm run report:all || true
+
+      - name: Publish Allure report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: playwright/reports/allure-report
+          destination_dir: allure
+          keep_files: true
+          commit_message: 'ci: update allure report'
+
+      - name: Upload Playwright + Allure artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-evidence
+          path: |
+            playwright/reports/
+            playwright/test-results/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Upload service logs
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: service-logs
+          path: ci-logs/
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Docker logs on failure
+        if: failure()
+        run: docker compose -f infrastructure/docker-compose.yml logs --no-color > docker-compose.log || true
+
+      - name: Upload compose log
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: compose-log
+          path: docker-compose.log
+          retention-days: 7
+          if-no-files-found: ignore

@@ -1,0 +1,40 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: employee-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:employee_db}
+    username: ${DB_USER:employee_user}
+    password: ${DB_PASSWORD:employee_password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2s
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      properties:
+        enable.idempotence: true
+
+app:
+  name: Sandhata Employee Portal
+  cache:
+    ttl-seconds: 600
+  jwt:
+    secret: ${JWT_SECRET:U2VjdXJlSldUU2VjcmV0S2V5RW1wbG95ZWVQbGF0Zm9ybTIwMjZBZXNzZW50aWFsU2VjcmV0}
+
+logging:
+  pattern:
+    correlation: "[${spring.application.name:app},%X{correlationId:-N/A}] "
+  level:
+    org.springframework.security: INFO

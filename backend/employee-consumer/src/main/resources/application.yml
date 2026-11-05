@@ -1,0 +1,39 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: employee-consumer
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:employee_db}
+    username: ${DB_USER:employee_user}
+    password: ${DB_PASSWORD:employee_password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP:localhost:9092}
+    consumer:
+      group-id: employee-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+app:
+  name: Sandhata Employee Portal
+  s3:
+    endpoint: ${S3_ENDPOINT:http://localhost:4566}
+    bucket: ${S3_BUCKET:employees}
+    region: ${AWS_REGION:ap-south-1}
+    access-key: ${AWS_ACCESS_KEY:test}
+    secret-key: ${AWS_SECRET_KEY:test}
+  crypto:
+    key-b64: ${S3_DEC_KEY_B64:GghACJLOTOVwBDBAcYc7fvrfB9XPcB9nuNuMBWTgsQo=}
+
+logging:
+  pattern:
+    correlation: "[${spring.application.name:app},%X{correlationId:-N/A}] "
+  level:
+    org.apache.kafka: WARN
+    software.amazon.awssdk: WARN

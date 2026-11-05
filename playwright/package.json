@@ -1,0 +1,35 @@
+{
+  "name": "employee-portal-playwright",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "pretest:smoke": "rm -rf reports/allure-results-smoke && node helpers/runGate.js",
+    "test:smoke": "ALLURE_RESULTS_DIR=reports/allure-results-smoke playwright test --config=configs/playwright.smoke.config.js",
+    "pretest:functional": "rm -rf reports/allure-results-functional && node helpers/runGate.js",
+    "test:functional": "ALLURE_RESULTS_DIR=reports/allure-results-functional playwright test --config=configs/playwright.config.js --project=functional",
+    "pretest:e2e": "rm -rf reports/allure-results-e2e && node helpers/runGate.js",
+    "test:e2e": "ALLURE_RESULTS_DIR=reports/allure-results-e2e playwright test --config=configs/playwright.config.js --project=e2e",
+    "pretest:regression": "rm -rf reports/allure-results-regression && node helpers/runGate.js",
+    "test:regression": "ALLURE_RESULTS_DIR=reports/allure-results-regression playwright test --config=configs/playwright.config.js --project=regression",
+    "pretest:all": "rm -rf reports/allure-results-all && node helpers/runGate.js",
+    "test:all": "ALLURE_RESULTS_DIR=reports/allure-results-all playwright test --config=configs/playwright.config.js --project=smoke --project=functional --project=e2e",
+    "report:smoke": "allure generate reports/allure-results-smoke -o reports/allure-report-smoke --clean",
+    "report:functional": "allure generate reports/allure-results-functional -o reports/allure-report-functional --clean",
+    "report:e2e": "allure generate reports/allure-results-e2e -o reports/allure-report-e2e --clean",
+    "report:regression": "allure generate reports/allure-results-regression -o reports/allure-report-regression --clean",
+    "report:all": "allure generate reports/allure-results-all -o reports/allure-report --clean",
+    "report:allure": "npm run report:all",
+    "clean:reports": "rm -rf reports/allure-results* reports/allure-report* test-results",
+    "open:report": "python3 -m http.server 5050 --directory reports/allure-report",
+    "open:report:allure": "allure open reports/allure-report --port 5051"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.658.0",
+    "kafkajs": "^2.2.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "allure-commandline": "^2.46.1",
+    "allure-playwright": "^3.14.0"
+  }
+}
