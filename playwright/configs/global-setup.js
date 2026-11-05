@@ -13,7 +13,7 @@ const path = require('path');
 const resultsDir = process.env.ALLURE_RESULTS_DIR || 'reports/allure-results';
 fs.mkdirSync(resultsDir, { recursive: true });
 fs.writeFileSync(path.join(resultsDir, 'environment.properties'), [
-  'project=Sandhata Employee Portal',
+  'project=FullStack Automation Framework',
   'author=Subramanian Meenakshi',
   'contact=Subramanian.Meenakshi@Sandhata.com',
   'note=feel free to reach out for questions, collaboration or feedback',
