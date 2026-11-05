@@ -1,0 +1,14 @@
+{
+  "employeeId": "PW3ekde42",
+  "firstName": "PostUpdate",
+  "lastName": "Wright",
+  "email": "PW3ekde42@corp.com",
+  "contactNumber": "+91-9876543210",
+  "designation": "Sr Analyst",
+  "department": "Platform",
+  "jobLevel": "L2",
+  "skills": "Java,Playwright",
+  "manager": "Ravi",
+  "location": "Chennai",
+  "status": "ACTIVE"
+}

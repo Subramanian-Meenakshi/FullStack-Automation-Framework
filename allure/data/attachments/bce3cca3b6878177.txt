@@ -1,0 +1,4 @@
+{"level":"INFO","timestamp":"2026-11-05T10:25:19.187Z","logger":"kafkajs","message":"[Consumer] Starting","groupId":"pw-validator-PW3egbb826-1793874319183"}
+{"level":"INFO","timestamp":"2026-11-05T10:25:19.200Z","logger":"kafkajs","message":"[ConsumerGroup] Consumer has joined the group","groupId":"pw-validator-PW3egbb826-1793874319183","memberId":"pw-tests-3a3f9666-dd0f-47d6-8450-dc7048cb15dc","leaderId":"pw-tests-3a3f9666-dd0f-47d6-8450-dc7048cb15dc","isLeader":true,"memberAssignment":{"employee-create":[0]},"groupProtocol":"RoundRobinAssigner","duration":12}
+{"level":"INFO","timestamp":"2026-11-05T10:25:24.224Z","logger":"kafkajs","message":"[Runner] consumer not running, exiting","groupId":"pw-validator-PW3egbb826-1793874319183","memberId":"pw-tests-3a3f9666-dd0f-47d6-8450-dc7048cb15dc"}
+{"level":"INFO","timestamp":"2026-11-05T10:25:24.227Z","logger":"kafkajs","message":"[Consumer] Stopped","groupId":"pw-validator-PW3egbb826-1793874319183"}
