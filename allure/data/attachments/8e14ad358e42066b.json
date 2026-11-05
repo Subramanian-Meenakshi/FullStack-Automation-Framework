@@ -1,0 +1,57 @@
+{
+  "inSync": false,
+  "mismatches": [
+    {
+      "field": "firstName",
+      "api": "Liar",
+      "kafka": "Honest"
+    },
+    {
+      "field": "firstName",
+      "api": "Liar",
+      "s3": "Honest"
+    }
+  ],
+  "api": {
+    "employeeId": "PW39xwin5",
+    "firstName": "Liar",
+    "lastName": "Wright",
+    "email": "PW39xwin5@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  },
+  "kafka": {
+    "employeeId": "PW39xwin5",
+    "firstName": "Honest",
+    "lastName": "Wright",
+    "email": "PW39xwin5@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  },
+  "s3": {
+    "employeeId": "PW39xwin5",
+    "firstName": "Honest",
+    "lastName": "Wright",
+    "email": "PW39xwin5@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}
