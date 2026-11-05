@@ -1,6 +1,7 @@
 # Full Stack Automation Framework for Modern Cloud Native , Event Driven Microservices & Distributed System Platform
 
 [![CI](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/ci.yml/badge.svg)](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/ci.yml)
+[![CD](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/cd.yml/badge.svg)](https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/workflows/cd.yml)
 
 Production-style Automation demo: React portal + Spring Boot microservices + JWT/RBAC + PostgreSQL + Redis + Kafka + LocalStack S3, with Playwright/Allure test automation and GitHub CI/CD.
 
@@ -277,11 +278,11 @@ Workflow: `.github/workflows/ci.yml`. Triggers: push (all branches) + pull reque
 | 2     | + infra + `scripts/smoke.sh` (35 checks)                              | `FAIL=0`                            |
 | 3     | + Playwright 131 tests + Allure report published to GitHub Pages      | 131/131                             |
 | 4     | harden: path filters, README badge, action version bumps              | green runs 41992340866 + 41994178947 (05-Nov) |
-| 5+    | CD (Dockerfiles + deploy)                                             | blocked on deploy-target decision   |
+| 5+    | CD: Dockerfiles + GHCR publish on `v*` tag                           | green run 42009784248 (`v0.1.0`, 05-Nov) |
 
 Status: stages 1-4 green. Latest gate run: https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/runs/42003197314
 
-CD status (stage 5+): not started — no Dockerfiles in repo yet. Design ready: build 3 service jars + frontend image, publish to GHCR on tag, then deploy step (self-hosted compose / cloud / registry-only) once a target is chosen.
+CD status (stage 5+): live — every `v*` tag builds 4 images (auth-service, employee-service, employee-consumer, frontend) and pushes `:vX.Y.Z` + `:latest` to `ghcr.io/subramanian-meenakshi/`. First publish: `v0.1.0`, run https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/runs/42009784248. Deploy step (running the images somewhere) stays out of scope until a host target is chosen.
 
 ### 8.2 Jobs
 
