@@ -1,0 +1,20 @@
+{
+  "action": "employee-create",
+  "employeeId": "PW3afdak1",
+  "correlationId": "pw-mw3afdak-8mvw",
+  "timestamp": "2026-11-05T08:32:36.629854375Z",
+  "employee": {
+    "employeeId": "PW3afdak1",
+    "firstName": "SyncCreate",
+    "lastName": "Wright",
+    "email": "PW3afdak1@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}

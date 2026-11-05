@@ -1,0 +1,46 @@
+{
+  "inSync": true,
+  "mismatches": [],
+  "api": {
+    "employeeId": "PW3afdak1",
+    "firstName": "SyncCreate",
+    "lastName": "Wright",
+    "email": "PW3afdak1@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  },
+  "kafka": {
+    "employeeId": "PW3afdak1",
+    "firstName": "SyncCreate",
+    "lastName": "Wright",
+    "email": "PW3afdak1@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  },
+  "s3": {
+    "employeeId": "PW3afdak1",
+    "firstName": "SyncCreate",
+    "lastName": "Wright",
+    "email": "PW3afdak1@corp.com",
+    "contactNumber": "+91-9876543210",
+    "designation": "Analyst",
+    "department": "QA",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}
