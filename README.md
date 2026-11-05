@@ -279,7 +279,7 @@ Workflow: `.github/workflows/ci.yml`. Triggers: push (all branches) + pull reque
 | 4     | harden: path filters, README badge, action version bumps              | green runs 41992340866 + 41994178947 (05-Nov) |
 | 5+    | CD (Dockerfiles + deploy)                                             | blocked on deploy-target decision   |
 
-Status: stages 1-4 green. Latest gate run: https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/runs/41994178947
+Status: stages 1-4 green. Latest gate run: https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/runs/42003197314
 
 CD status (stage 5+): not started — no Dockerfiles in repo yet. Design ready: build 3 service jars + frontend image, publish to GHCR on tag, then deploy step (self-hosted compose / cloud / registry-only) once a target is chosen.
 

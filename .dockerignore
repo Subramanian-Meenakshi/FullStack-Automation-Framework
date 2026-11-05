@@ -1,0 +1,6 @@
+.git
+**/node_modules
+playwright/reports
+playwright/test-results
+ci-logs
+*.log
