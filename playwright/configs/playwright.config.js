@@ -26,20 +26,20 @@ module.exports = defineConfig({
   },
   projects: [
     {
-      name: 'smoke',
+      name: 'Smoke',
       testMatch: /tests\/smoke\/.*\.spec\.js/,
     },
     {
-      name: 'functional',
+      name: 'Functional',
       testMatch: /tests\/(api|security)\/.*\.spec\.js/,
     },
     {
-      name: 'e2e',
+      name: 'E2E',
       testMatch: /tests\/(ui|e2e)\/.*\.spec\.js/,
       use: { baseURL: UI },
     },
     {
-      name: 'regression',
+      name: 'Regression',
       testMatch: /tests\/(api|security|ui|e2e)\/.*\.spec\.js/,
       use: { baseURL: UI },
     },

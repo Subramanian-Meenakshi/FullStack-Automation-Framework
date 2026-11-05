@@ -13,10 +13,10 @@ const path = require('path');
 const resultsDir = process.env.ALLURE_RESULTS_DIR || 'reports/allure-results';
 fs.mkdirSync(resultsDir, { recursive: true });
 fs.writeFileSync(path.join(resultsDir, 'environment.properties'), [
-  'project=FullStack Automation Framework',
-  'author=Subramanian Meenakshi',
-  'contact=Subramanian.Meenakshi@Sandhata.com',
-  'note=feel free to reach out for questions, collaboration or feedback',
+  'Project=FullStack Automation Framework',
+  'Author=Subramanian Meenakshi',
+  'Contact=Subramanian.Meenakshi@Sandhata.com',
+  'Note=feel free to reach out for questions, collaboration or feedback',
 ].join('\n') + '\n');
 
 module.exports = async () => {};

@@ -222,7 +222,7 @@ Entry criteria: infra up (`scripts/infra.sh` FAIL=0), three services healthy, `S
 | `npm run test:regression` | api + security + ui + e2e             | 123   |
 | `npm run test:all`        | full matrix, each file once           | 131   |
 
-Runner UI: `npx playwright test --config=configs/playwright.config.js --ui` or `--project=smoke|functional|e2e|regression`.
+Runner UI: `npx playwright test --config=configs/playwright.config.js --ui` or `--project=Smoke|Functional|E2E|Regression`.
 
 Test-data flush: every `test:*` call runs `helpers/runGate.js`, which counts runs in `playwright/.test-run-count` and every 5th run executes `scripts/db-flush.sh` — keeps 10 baseline employees + last 1000 audit rows, clears users/roles untouched and the redis cache. Prevents the unpaginated employee list (and audit table) from growing without bound across gate runs. Manual run: `bash scripts/db-flush.sh`.
 
@@ -280,6 +280,8 @@ Workflow: `.github/workflows/ci.yml`. Triggers: push (all branches) + pull reque
 | 5+    | CD (Dockerfiles + deploy)                                             | blocked on deploy-target decision   |
 
 Status: stages 1-4 green. Latest gate run: https://github.com/Subramanian-Meenakshi/FullStack-Automation-Framework/actions/runs/41994178947
+
+CD status (stage 5+): not started — no Dockerfiles in repo yet. Design ready: build 3 service jars + frontend image, publish to GHCR on tag, then deploy step (self-hosted compose / cloud / registry-only) once a target is chosen.
 
 ### 8.2 Jobs
 
