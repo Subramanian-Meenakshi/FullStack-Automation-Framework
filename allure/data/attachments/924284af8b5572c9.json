@@ -1,0 +1,14 @@
+{
+  "employeeId": "PW4mzl591",
+  "firstName": "SyncCreate",
+  "lastName": "Wright",
+  "email": "PW4mzl591@corp.com",
+  "contactNumber": "+91-9876543210",
+  "designation": "Analyst",
+  "department": "QA",
+  "jobLevel": "L2",
+  "skills": "Java,Playwright",
+  "manager": "Ravi",
+  "location": "Chennai",
+  "status": "ACTIVE"
+}

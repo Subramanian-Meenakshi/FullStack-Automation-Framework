@@ -1,0 +1,14 @@
+{
+  "employeeId": "PW4mzp7a2",
+  "firstName": "PostUpdate",
+  "lastName": "Wright",
+  "email": "PW4mzp7a2@corp.com",
+  "contactNumber": "+91-9876543210",
+  "designation": "Sr Analyst",
+  "department": "Platform",
+  "jobLevel": "L2",
+  "skills": "Java,Playwright",
+  "manager": "Ravi",
+  "location": "Chennai",
+  "status": "ACTIVE"
+}
