@@ -7,6 +7,8 @@ const spaBypass = (req) => (req.headers.accept && req.headers.accept.includes('t
 
 export default defineConfig({
   plugins: [react()],
+  // GitHub Pages serves the demo under /<repo>/ui/ — CI sets VITE_BASE, dev keeps '/'.
+  base: process.env.VITE_BASE || '/',
   server: {
     port: 5173,
     proxy: {

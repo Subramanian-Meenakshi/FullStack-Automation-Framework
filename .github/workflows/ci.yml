@@ -182,6 +182,23 @@ jobs:
           keep_files: true
           commit_message: 'ci: update allure report'
 
+      - name: Build Web UI (Pages demo)
+        if: github.event_name == 'push'
+        working-directory: frontend/employee-portal
+        run: npm run build
+        env:
+          VITE_BASE: /${{ github.event.repository.name }}/ui/
+
+      - name: Publish Web UI to GitHub Pages
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: frontend/employee-portal/dist
+          destination_dir: ui
+          keep_files: true
+          commit_message: 'ci: update ui demo'
+
       - name: Upload Playwright + Allure artifacts
         if: always()
         uses: actions/upload-artifact@v7

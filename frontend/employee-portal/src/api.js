@@ -50,7 +50,8 @@ export async function api(base, path, options = {}) {
   }
   if (res.status === 401) {
     clearSession();
-    if (window.location.pathname !== '/login') window.location.href = '/login';
+    const loginPath = `${import.meta.env.BASE_URL}login`;
+    if (window.location.pathname !== loginPath) window.location.href = loginPath;
   }
   return res;
 }
