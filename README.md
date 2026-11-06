@@ -5,6 +5,8 @@
 
 Production-style Quality Engineering Automation: React portal + Spring Boot microservices + JWT/RBAC + PostgreSQL + Redis + Kafka + Local Stack S3, with Playwright/Allure test automation and GitHub CI/CD.
 
+**Architecture case study:** [CASE_STUDY.md](CASE_STUDY.md) — C4 diagrams, sequence diagrams, decision matrix, NFRs, STRIDE threat model, test pyramid, CI/CD and observability, production readiness, screenshots.
+
 ---
 
 ## 1. Architecture
