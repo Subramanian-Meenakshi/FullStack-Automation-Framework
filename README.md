@@ -63,7 +63,7 @@ Event flow (writes): employee-service publishes async (failure logged WARN, CRUD
 | Object storage | LocalStack 3.0.2 S3 (Community Edition, pinned)                            |
 | Auth           | JWT HS384, claims `sub`, `role`, `type` = access\|refresh            |
 | Tests          | Playwright 1.64 (chromium only), Allure 2.46                               |
-| CI/CD          | GitHub Actions (build, smoke, Playwright), Allure report + Web UI demo on GitHub Pages |
+| CI/CD          | GitHub Actions (build, smoke, Playwright), Allure report on GitHub Pages   |
 | Containers     | Docker Compose                                                             |
 | Reporting docs | This README                                                                   |
 
@@ -291,7 +291,7 @@ CD status (stage 5+): live — every `v*` tag builds 4 images (auth-service, emp
 | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `build-backend`  | temurin 21, `mvn -B -q -DskipTests install` in `backend/`, maven cache, jars uploaded (3d)                                                                                                                                 |
 | `build-frontend` | node 22, `npm ci && npm run build` in `frontend/employee-portal/`, npm cache, dist uploaded (3d)                                                                                                                             |
-| `smoke`          | `docker compose up` → `scripts/infra.sh` → `scripts/restart.sh` → `scripts/smoke.sh` (35/35) → seed baseline `BASE01`-`BASE10` → Vite → `test:smoke` (8) → `test:all` (131) → Allure report → publish to `gh-pages` (`allure/`) → Web UI build → publish to `gh-pages` (`ui/`) |
+| `smoke`          | `docker compose up` → `scripts/infra.sh` → `scripts/restart.sh` → `scripts/smoke.sh` (35/35) → seed baseline `BASE01`-`BASE10` → Vite → `test:smoke` (8) → `test:all` (131) → Allure report → publish to `gh-pages` (`allure/`) |
 
 On failure, `smoke` stages compose/service logs into workspace `ci-logs/` and uploads them as an artifact.
 
@@ -305,11 +305,18 @@ https://subramanian-meenakshi.github.io/FullStack-Automation-Framework/allure/
 
 Published from the `gh-pages` branch (path `allure/`) by `peaceiris/actions-gh-pages` on every green run. Serves only after repo **Settings → Pages → Deploy from branch → `gh-pages` / root** is enabled.
 
-### 8.5 Web UI demo
+### 8.5 Live demo (run locally)
 
-https://subramanian-meenakshi.github.io/FullStack-Automation-Framework/ui/
+GitHub Pages hosts only static files (the Allure report above) — it cannot run the backend. A live system with working login and data runs on your machine:
 
-Static build of the React portal (`vite build` with `VITE_BASE=/FullStack-Automation-Framework/ui/`), published from the `gh-pages` branch (path `ui/`) by `peaceiris/actions-gh-pages` on every green `smoke` run — same Pages setting as the Allure report. No backend serves this link: login and data calls fail until a host target for the services exists, so it shows the UI shell, not a live system. Working demo stays local — `bash scripts/restart.sh` then `npm run dev` in `frontend/employee-portal/`.
+```bash
+docker compose -f infrastructure/docker-compose.yml up -d
+bash scripts/infra.sh          # must print RESULT FAIL=0
+bash scripts/restart.sh        # builds + starts 3 jars, waits for 3x health
+cd frontend/employee-portal && npm install && npm run dev
+```
+
+Open http://localhost:5173 and sign in `hradmin` / `hradmin123` (every seeded role in section 5.3). Full walkthrough with verify steps: section 6 Getting started.
 
 ### 8.6 Local vs CI portability
 
