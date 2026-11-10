@@ -1,0 +1,20 @@
+{
+  "action": "employee-update",
+  "employeeId": "PWaijlws2",
+  "correlationId": "pw-mwaijm8v-5fa9",
+  "timestamp": "2026-11-10T09:54:15.013057632Z",
+  "employee": {
+    "employeeId": "PWaijlws2",
+    "firstName": "PostUpdate",
+    "lastName": "Joshi",
+    "email": "PWaijlws2@sandhata.example",
+    "contactNumber": "+91-9876543210",
+    "designation": "Sr Analyst",
+    "department": "Platform",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}

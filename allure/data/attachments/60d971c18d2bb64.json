@@ -1,0 +1,20 @@
+{
+  "action": "employee-create",
+  "employeeId": "PWaijhx51",
+  "correlationId": "pw-mwaijhx5-ydxf",
+  "timestamp": "2026-11-10T09:54:09.414681216Z",
+  "employee": {
+    "employeeId": "PWaijhx51",
+    "firstName": "SyncCreate",
+    "lastName": "Verma",
+    "email": "PWaijhx51@sandhata.example",
+    "contactNumber": "+91-9876543210",
+    "designation": "Software Engineer",
+    "department": "Engineering",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}

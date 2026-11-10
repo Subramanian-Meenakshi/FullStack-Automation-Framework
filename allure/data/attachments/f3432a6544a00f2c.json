@@ -1,0 +1,57 @@
+{
+  "inSync": false,
+  "mismatches": [
+    {
+      "field": "firstName",
+      "api": "Liar",
+      "kafka": "Honest"
+    },
+    {
+      "field": "firstName",
+      "api": "Liar",
+      "s3": "Honest"
+    }
+  ],
+  "api": {
+    "employeeId": "PWaijuoj5",
+    "firstName": "Liar",
+    "lastName": "Reddy",
+    "email": "PWaijuoj5@sandhata.example",
+    "contactNumber": "+91-9876543210",
+    "designation": "Software Engineer",
+    "department": "Engineering",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  },
+  "kafka": {
+    "employeeId": "PWaijuoj5",
+    "firstName": "Honest",
+    "lastName": "Reddy",
+    "email": "PWaijuoj5@sandhata.example",
+    "contactNumber": "+91-9876543210",
+    "designation": "Software Engineer",
+    "department": "Engineering",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  },
+  "s3": {
+    "employeeId": "PWaijuoj5",
+    "firstName": "Honest",
+    "lastName": "Reddy",
+    "email": "PWaijuoj5@sandhata.example",
+    "contactNumber": "+91-9876543210",
+    "designation": "Software Engineer",
+    "department": "Engineering",
+    "jobLevel": "L2",
+    "skills": "Java,Playwright",
+    "manager": "Ravi",
+    "location": "Chennai",
+    "status": "ACTIVE"
+  }
+}
