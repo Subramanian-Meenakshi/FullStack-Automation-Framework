@@ -3,6 +3,12 @@
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
+# WSL restart rewrites /etc/localtime to legacy Asia/Calcutta; postgres tzdata
+# (2026e) dropped that name -> PG rejects the JDBC TimeZone param with
+# "FATAL: invalid value for parameter TimeZone". Force JVM to canonical
+# Asia/Kolkata (same +05:30 offset) so services survive any host TZ name.
+export JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS:-} -Duser.timezone=Asia/Kolkata"
+
 echo "BUILD"
 ( cd "$ROOT/backend" && mvn -q -DskipTests install ) || { echo "FAIL build"; exit 1; }
 echo "PASS build"

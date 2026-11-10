@@ -13,7 +13,7 @@ test.describe('C CRUD positive', () => {
     expect(r.status).toBe(201);
     expect(r.json.employeeId).toBe(id);
     expect(r.json.firstName).toBe('CreateMe');
-    expect(r.json.email).toBe(`${id}@corp.com`);
+    expect(r.json.email).toBe(`${id}@sandhata.example`);
     expect(r.json.status).toBe('ACTIVE');
   });
 

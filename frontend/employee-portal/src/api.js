@@ -1,5 +1,5 @@
 // Same-origin paths; vite dev proxy routes /api -> 8080, /employees|/audit -> 8082.
-// Works from localhost, 127.0.0.1, or LAN IP — no CORS needed.
+// Always open via http://localhost:5173 — the only canonical origin.
 const AUTH_URL = '';
 const EMP_URL = '';
 

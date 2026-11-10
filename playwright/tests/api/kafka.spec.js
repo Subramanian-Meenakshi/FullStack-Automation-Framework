@@ -14,12 +14,13 @@ test.describe('E Kafka producer', () => {
   test('E-P01 create publishes to employee-create with correlation', async () => {
     const id = newEmployeeId();
     const corr = newCorrelationPrefix();
-    await empApi('/employees', { method: 'POST', token, correlationId: corr, body: employeePayload(id) });
+    const body = employeePayload(id);
+    await empApi('/employees', { method: 'POST', token, correlationId: corr, body });
     const msg = await fetchKafkaMessage('employee-create', id);
     expect(msg, 'message found').toBeTruthy();
     expect(msg.action).toBe('employee-create');
     expect(msg.correlationId).toBe(corr);
-    expect(msg.employee.firstName).toBe('Play');
+    expect(msg.employee.firstName).toBe(body.firstName);
   });
 
   test('E-P02 read publishes to employee-read (cache hit too)', async () => {

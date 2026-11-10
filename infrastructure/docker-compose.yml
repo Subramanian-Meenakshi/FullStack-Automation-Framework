@@ -63,6 +63,9 @@ services:
       - SERVICES=s3
       - AWS_DEFAULT_REGION=ap-south-1
       - DEFAULT_REGION=ap-south-1
+      - EXTRA_CORS_ALLOWED_ORIGINS=http://localhost:4200
+      - EXTRA_CORS_ALLOWED_HEADERS=x-amz-checksum-mode
+      - PERSISTENCE=1
     volumes:
       - localstack_data:/var/lib/localstack
 

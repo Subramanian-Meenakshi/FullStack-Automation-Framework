@@ -1,4 +1,5 @@
 const { users } = require('../data/users');
+const { nameFor, emailFor } = require('../data/employeeData');
 const { AUTH_URL, EMP_URL } = require('./services');
 
 async function api(base, path, { method = 'GET', token, body, correlationId, headers = {} } = {}) {
@@ -34,14 +35,15 @@ async function loginRaw(username, password) {
 }
 
 function employeePayload(id, overrides = {}) {
+  const { firstName, lastName } = nameFor(id);
   return {
     employeeId: id,
-    firstName: 'Play',
-    lastName: 'Wright',
-    email: `${id}@corp.com`,
+    firstName,
+    lastName,
+    email: emailFor(id),
     contactNumber: '+91-9876543210',
-    designation: 'Analyst',
-    department: 'QA',
+    designation: 'Software Engineer',
+    department: 'Engineering',
     jobLevel: 'L2',
     skills: 'Java,Playwright',
     manager: 'Ravi',

@@ -130,10 +130,13 @@ jobs:
             | grep -o '"accessToken":"[^"]*' | cut -d'"' -f4)
           if [ -z "$TOKEN" ]; then echo "FAIL token"; exit 1; fi
           OK=0
+          FIRST=(Ramesh Harish Subramanian Priya Anitha Kumar Suresh Meena Arun Lakshmi)
+          LAST=(Menon Iyer Sharma Rao Nair Reddy Pillai Gupta Verma Joshi)
           for i in $(seq -w 1 10); do
+            n=$((10#$i - 1))
             C=$(curl -s -m5 -o /dev/null -w '%{http_code}' -X POST http://localhost:8082/employees \
               -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
-              -d "{\"employeeId\":\"BASE$i\",\"firstName\":\"Base\",\"lastName\":\"Row$i\",\"email\":\"base$i@corp.com\",\"contactNumber\":\"98765430$i\"}")
+              -d "{\"employeeId\":\"BASE$i\",\"firstName\":\"${FIRST[$n]}\",\"lastName\":\"${LAST[$n]}\",\"email\":\"base$i@sandhata.example\",\"contactNumber\":\"98765430$i\"}")
             echo "BASE$i=$C"
             [ "$C" = "201" ] && OK=$((OK+1))
           done

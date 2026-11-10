@@ -19,8 +19,11 @@ function killConsumer() {
 }
 
 function startConsumerDetached() {
+  // Same TZ override as scripts/restart.sh: WSL host TZ can be the legacy
+  // "Asia/Calcutta", which postgres tzdata rejects -> JVM dies at boot and
+  // every consumer-dependent test fails (F-N04 cascade).
   execSync(
-    `setsid nohup java -jar "${CONSUMER_JAR}" > "${CONSUMER_LOG}" 2>&1 < /dev/null & disown`,
+    `JAVA_TOOL_OPTIONS="-Duser.timezone=Asia/Kolkata" setsid nohup java -jar "${CONSUMER_JAR}" > "${CONSUMER_LOG}" 2>&1 < /dev/null & disown`,
     { shell: '/bin/bash' },
   );
 }
@@ -52,7 +55,7 @@ test.describe('F consumer + S3', () => {
     expect(obj, 's3 object exists + decrypts').toBeTruthy();
     expect(obj.employeeId).toBe(id);
     expect(obj.firstName).toBe('Stored');
-    expect(obj.email).toBe(`${id}@corp.com`);
+    expect(obj.email).toBe(`${id}@sandhata.example`);
     expect(obj.status).toBe('ACTIVE');
   });
 

@@ -1,5 +1,6 @@
 const { expect } = require('@playwright/test');
 const { newEmployeeId } = require('../../../helpers/ids');
+const { nameFor, emailFor } = require('../../../data/employeeData');
 
 async function gotoEmployees(page) {
   await page.goto('/employees');
@@ -17,14 +18,15 @@ async function openCreateDialog(page) {
 }
 
 async function fillCreateForm(page, id, overrides = {}) {
+  const { firstName, lastName } = nameFor(id);
   const data = {
     employeeId: id,
-    firstName: 'UI',
-    lastName: 'Tester',
-    email: `${id}@corp.com`,
+    firstName,
+    lastName,
+    email: emailFor(id),
     contactNumber: '+91-9876543210',
-    designation: 'Analyst',
-    department: 'QA',
+    designation: 'Software Engineer',
+    department: 'Engineering',
     jobLevel: 'L2',
     skills: 'Playwright',
     manager: 'Ravi',

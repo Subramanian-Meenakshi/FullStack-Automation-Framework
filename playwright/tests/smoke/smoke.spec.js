@@ -29,12 +29,13 @@ test.describe('smoke', () => {
   test('crud happy path: create -> get -> update -> delete -> restore', async () => {
     const t = await login('HR_ADMIN');
     const id = newEmployeeId();
-    const created = await empApi('/employees', { method: 'POST', token: t.accessToken, body: employeePayload(id) });
+    const body = employeePayload(id);
+    const created = await empApi('/employees', { method: 'POST', token: t.accessToken, body });
     expect(created.status).toBe(201);
 
     const got = await empApi(`/employees/${id}`, { token: t.accessToken });
     expect(got.status).toBe(200);
-    expect(got.json.firstName).toBe('Play');
+    expect(got.json.firstName).toBe(body.firstName);
 
     const upd = await empApi(`/employees/${id}`, {
       method: 'PUT', token: t.accessToken,
